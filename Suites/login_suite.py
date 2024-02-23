@@ -4,6 +4,7 @@ import time
 from contextlib import contextmanager
 from playwright.sync_api import sync_playwright, Page
 from testdata import TestData
+from testdata import site_link
 
 @contextmanager
 def allure_step(name, page):
@@ -22,7 +23,7 @@ class SuiteLogIn(TestData):
     @allure.step("Open the page")
     def open_page(self):
         try:
-            self.page.goto("https://www.kingbillycasino6.com/")
+            self.page.goto(site_link)
             allure.attach(self.page.screenshot(), name="Page opened", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)

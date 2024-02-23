@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from playwright.sync_api import sync_playwright, Page
 from playwright.sync_api import Locator
 from testdata import TestData
+from testdata import site_link
 
 
 
@@ -26,7 +27,7 @@ class SuiteHeader(TestData):
     
     def open_page(self):
         try:
-            self.page.goto("https://www.kingbillycasino6.com/")
+            self.page.goto(site_link)
             
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)

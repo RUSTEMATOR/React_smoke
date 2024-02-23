@@ -3,6 +3,7 @@ import pytest
 import allure
 import time
 from contextlib import contextmanager
+from testdata import site_link
 
 @contextmanager
 def allure_step(name, page):
@@ -44,7 +45,7 @@ class NegativeLogin(TestData_login):
     # Define the test function
     @pytest.mark.parametrize("email, password", zip(TestData_login.emails, TestData_login.passwords))
     def test_negativelogin(self, page: Page, email: str, password: str) -> None:
-        self.page.goto("https://www.kingbillycasino.com/")
+        self.page.goto(site_link)
         self.page.get_by_role("link", name="sign in").click()
         self.page.get_by_placeholder("your e-mail address").fill(email)
         self.page.get_by_placeholder("your password").click()
