@@ -1,4 +1,7 @@
+from playwright.sync_api import Page, expect
+
 class Locators:
+    page = Page
     @property
     def sign_in_form(self):
         return self.page.get_by_role("link", name="sign in")
@@ -33,7 +36,7 @@ class Locators:
 
     @property
     def banking_page(self):
-        return self.page.locator('.left-header-menu__name', text="Banking")
+        return self.page.locator('#left-header-menu__name', text="Banking")
 
     @property
     def jackpot_page(self):
@@ -211,3 +214,12 @@ class Locators:
     @property
     def main_page_button(self):
         return self.page.frame_locator("#root iframe").frame_locator("iframe").locator("#button-back")
+
+
+    @property
+    def burger_slider(self):
+        return self.page.locator(".burger__slide")
+
+    @property
+    def cashback_card(self):
+        return self.page.locator(".container.container--sidebar > div > .promo-page__wrapper > div > :nth-child(1)")

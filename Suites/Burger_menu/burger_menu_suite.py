@@ -1,8 +1,9 @@
+import re
 import time
 import allure
 import pdb
 from contextlib import contextmanager
-from playwright.sync_api import Locator
+from playwright.sync_api import Locator, expect
 from Suites.Locators import Locators
 from Data.testinfo import TestInfo
 from Suites.Base.base_setup import BaseSetUp
@@ -27,6 +28,7 @@ class BurgerMenu(BaseSetUp):
     
     @allure.step("Open burger menu")
     def open_burger_menu(self):
+        self.page.get_by_role("button", name="accept").click()
         try:
             self.burger_menu.click()
             time.sleep(1)
@@ -46,12 +48,9 @@ class BurgerMenu(BaseSetUp):
             time.sleep(1)
             allure.attach(self.page.screenshot(), name="Promotions page is open", attachment_type=allure.attachment_type.PNG)
 
+            expect(self.cashback_card).to_be_visible()
 
-            if self.page.url == self.promo_link:
-               pass
-            else:
-                raise AssertionError()
-            
+
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Opening promotions page (Failed)", attachment_type=allure.attachment_type.PNG)
@@ -63,7 +62,6 @@ class BurgerMenu(BaseSetUp):
     
     @allure.step("Open Tournament page")
     def open_tournaments(self):
-        self.page.get_by_role("banner").get_by_role("button").first.click()
         try:
             self.tournament_page.click()
             time.sleep(1)
@@ -73,20 +71,19 @@ class BurgerMenu(BaseSetUp):
                pass
             else:
                 raise AssertionError()
-            
+
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Opening burger menu (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
         finally:
             self.open_vip()
+
             
     @allure.step("Open VIP page")
     def open_vip(self):
-        self.page.get_by_role("banner").get_by_role("button").first.click()
         try:
             self.vip_page.click()
-            time.sleep(1)
             allure.attach(self.page.screenshot(), name="VIP page opened", attachment_type=allure.attachment_type.PNG)
             
             if self.page.url == self.vip_url:
@@ -103,12 +100,12 @@ class BurgerMenu(BaseSetUp):
     
     @allure.step("Open banking")
     def open_banking(self):
-        self.page.get_by_role("banner").get_by_role("button").first.click()
         try:
-            pdb.set_trace()
             self.banking_page.click()
             time.sleep(1)
             allure.attach(self.page.screenshot(), name="Banking page opened", attachment_type=allure.attachment_type.PNG)
+
+
             
             if self.page.url == self.banking_url:
                pass
@@ -120,12 +117,12 @@ class BurgerMenu(BaseSetUp):
             allure.attach(self.page.screenshot(), name="Opening burger menu (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
         finally:
+            time.sleep(10)
             self.open_jackpots()
     
     
     @allure.step("Open Jackpots")
     def open_jackpots(self):
-        self.page.get_by_role("banner").get_by_role("button").first.click()
         try:
             self.jackpot_page.click()
             time.sleep(1)
@@ -146,8 +143,6 @@ class BurgerMenu(BaseSetUp):
     
     @allure.step("Open Legend")
     def open_legend(self):
-        self.page.get_by_role("button", name="accept").click()
-        self.page.get_by_role("banner").get_by_role("button").first.click()    
         try:
             self.legend_page.click()
             time.sleep(1)

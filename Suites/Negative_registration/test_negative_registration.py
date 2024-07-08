@@ -3,8 +3,6 @@ import pytest
 import allure
 import time
 from contextlib import contextmanager
-from Data.testinfo import TestInfo
-from Suites.Base.base_info import BaseInfo
 @contextmanager
 def allure_step(name, page):
     try:

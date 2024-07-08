@@ -65,6 +65,7 @@ def test_burger_menu(playwright):
     burger_menu.set_up()
     burger_menu.open_burger_menu()
 
+
 # @allure.suite("Promo cards")
 # def test_promo_cards(page):
 #     promo = PromoCards(page)
