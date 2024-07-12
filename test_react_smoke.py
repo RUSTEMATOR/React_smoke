@@ -2,20 +2,20 @@ import allure
 # import pytest
 # from playwright.sync_api import Page
 # from Suites.Login_reg.login_suite import SuiteLogIn
-# from Suites.Deposit.deposit_case import SuiteHeader
+from Suites.Deposit.deposit_case import SuiteHeader
 # from Suites.Search_bar.search_bar_case import SearchBar
 # from Suites.Negative_registration.test_negative_registration import TestData
 # from Suites.Negative_registration.test_negative_registration import NegativeReg
 # from Suites.Login_reg.negative_login_suite import NegativeLogin
 # from Suites.Login_reg.negative_login_suite import TestData_login
 # from Suites.Jackpot.jackpot_suite import JackpotBanners
-from Suites.Burger_menu.burger_menu_suite import BurgerMenu
+# from Suites.Burger_menu.burger_menu_suite import BurgerMenu
 # from Suites.Promo.promo_suite import PromoCards
 # from Suites.API.api_requests import test_url_response
 # from Suites.Providers.providers_suite import ProvidersTest
 # from Suites.Providers.providers_suite import TestDataProviders
 # from Suites.Game_categories.game_categories_suite_en import CategorieTestEn, TestDataCategoriesEn
-# from Suites.Info_center.info_center_suite import InfoCenter
+from Suites.Info_center.info_center_suite import InfoCenter
 # from Suites.Login_reg.registrstion_suite import Registration
 
 
@@ -30,9 +30,15 @@ from Suites.Burger_menu.burger_menu_suite import BurgerMenu
 #     suite_login.open_page()
 #
 # @allure.suite("Header suite")
-# def test_deposit(page):
-#     case_deposit = SuiteHeader(page)
-#     case_deposit.open_page()
+# def test_deposit(playwright):
+#     case_deposit = SuiteHeader(playwright)
+#     case_deposit.set_up()
+#     case_deposit.press_deposit()
+#     case_deposit.options_check()
+#     case_deposit.close_deposit()
+#     case_deposit.open_players_profile()
+#     case_deposit.check_deposit_tab()
+
 #
 #
 # @allure.suite("Header suite")
@@ -59,11 +65,17 @@ from Suites.Burger_menu.burger_menu_suite import BurgerMenu
 #     jackpot_banners.open_page()
     
 
-@allure.suite("Burger menu suite")
-def test_burger_menu(playwright):
-    burger_menu = BurgerMenu(playwright)
-    burger_menu.set_up()
-    burger_menu.open_burger_menu()
+# @allure.suite("Burger menu suite")
+# def test_burger_menu(playwright):
+#     burger_menu = BurgerMenu(playwright)
+#     burger_menu.set_up()
+#     burger_menu.open_burger_menu()
+#     burger_menu.open_promotions()
+#     burger_menu.open_tournaments()
+#     burger_menu.open_vip()
+#     burger_menu.open_banking()
+#     burger_menu.open_jackpots()
+#     burger_menu.open_legend()
 
 
 # @allure.suite("Promo cards")
@@ -71,10 +83,19 @@ def test_burger_menu(playwright):
 #     promo = PromoCards(page)
 #     promo.open_page()
 #
-# @allure.suite("Info_center")
-# def test_info_center(page):
-#     info_center = InfoCenter(page)
-#     info_center.open_page()
+@allure.suite("Info_center")
+def test_info_center(playwright):
+    info_center = InfoCenter(playwright)
+    info_center.set_up()
+    info_center.open_banking_page()
+    info_center.open_casino_faq()
+    info_center.open_casino_dictionary()
+    info_center.open_crypto_page()
+    info_center.open_complaints()
+    info_center.open_terms_and_C()
+    info_center.open_privacy_policy()
+    info_center.open_responsible_gaming()
+    info_center.open_support()
 #
 #
 # @pytest.mark.parametrize("categorie_name_en", TestDataCategoriesEn.categorie_name_en)

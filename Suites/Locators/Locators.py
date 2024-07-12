@@ -24,8 +24,7 @@ class Locators:
 
     @property
     def promotions_page(self):
-        return self.page.locator("#bar").get_by_role("link", name="Promotions")
-
+        return self.page.locator('xpath=//*[@id="bar"]/div[2]/div/div/header/div[2]/ul/li[1]/a/span')
     @property
     def tournament_page(self):
         return self.page.locator("#bar").get_by_role("link", name="Tournaments")
@@ -36,7 +35,7 @@ class Locators:
 
     @property
     def banking_page(self):
-        return self.page.locator('#left-header-menu__name', text="Banking")
+        return self.page.locator('xpath=//*[@id="bar"]/div[2]/div/div/header/div[2]/ul/li[4]/a/span')
 
     @property
     def jackpot_page(self):
@@ -45,10 +44,6 @@ class Locators:
     @property
     def legend_page(self):
         return self.page.locator("#bar").get_by_role("link", name="Legend")
-
-    @property
-    def deposit_button(self):
-        return self.page.get_by_role("link", name="deposit")
 
     @property
     def deposit_button(self):
@@ -159,7 +154,7 @@ class Locators:
         return self.page.get_by_role("link", name="Shield Jackpot")
 
     @property
-    def shield_button(self):
+    def sword_button(self):
         return self.page.get_by_role("link", name="Sword Jackpot")
 
     @property
@@ -182,11 +177,6 @@ class Locators:
     def adult_checkbox(self):
         return self.page.locator("#sign-up label").filter(
             has_text="I am 18 years old and I accept the Privacy Policy and Terms and Conditions *").locator(
-            "span").first
-
-    @property
-    def promo_checkbox(self):
-        return self.page.locator("#sign-up label").filter(has_text="I want to receive promos").locator(
             "span").first
 
     @property
@@ -222,4 +212,26 @@ class Locators:
 
     @property
     def cashback_card(self):
-        return self.page.locator(".container.container--sidebar > div > .promo-page__wrapper > div > :nth-child(1)")
+        return self.page.locator('xpath=//*[@id="root"]/div[2]/main/div/div[2]/div/div[1]/div/div[1]')
+
+
+    @property
+    def accept_cookie_button(self):
+        return self.page.locator("#accept_initial_notification_button")
+
+    @property
+    def tournament_banner(self):
+        return self.page.locator('.tourn-item')
+
+    @property
+    def banking_item(self):
+        return self.page.locator('.payment-list__block > .payment-list__block-wrapper>:first-child').first
+
+
+    @property
+    def shield_jackpot(self):
+        return self.page.locator('xpath=//*[@id="root"]/div[2]/main/div/div[1]/div/div/div[1]/div')
+
+    @property
+    def legend_title(self):
+        return self.page.locator('xpath=//*[@id="root"]/div[2]/main/div/div/div/div/div[2]/div/h2')

@@ -2,10 +2,11 @@ import allure
 import pytest
 import time
 from contextlib import contextmanager
-from playwright.sync_api import sync_playwright, Page, expect
+from playwright.sync_api import sync_playwright, expect
 from playwright.sync_api import Locator
 from Data.testinfo import TestInfo
 from Suites.Locators.Locators import Locators
+from Suites.Base.base_setup import BaseSetUp
 
 
 
@@ -18,74 +19,26 @@ def allure_step(name, page):
 
 
 @allure.suite("Heared Suite")
-class SuiteHeader(Locators):
-    def __init__(self, page: Page):
-        self.page = page
-
-        
-
-    
-    def open_page(self, kingbillysite):
+class SuiteHeader(BaseSetUp):
+    def set_up(self):
         try:
-            self.page.goto(kingbillysite)
-            
+            super().set_up()
+            self.accept_cookie_button.click()
         except Exception as e:
-            allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
-            
-        finally: 
-            self.open_signin_form()
-
-    def open_signin_form(self):
-        try:
-            self.sign_in_form.click()
-            
-        except Exception as e:
-            allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
-            
-        finally:
-            self.enter_valid_data()
-
-
-    def enter_valid_data(self):
-        try:
-            self.login_email_field.click()
-            self.login_email_field.fill(self.login_email)
-            
-
-            self.login_password_field.click()
-            self.login_password_field.fill(self.login_password)
-            
-
-        except Exception as e:
-            allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
-
-        finally:
-            self.press_enter()
-
-    
-    def press_enter(self):
-        try:
-            self.sign_in_button.click()
-            time.sleep(3)
-
-        except Exception as e:
-            allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
-        
-        finally:
-            self.press_deposit()
+            raise AssertionError from e
     
     @allure.step("Open Deposit window")
     def press_deposit(self):
         try:
             self.deposit_button.click()
-            time.sleep(1)
+            expect(self.payment_method).to_be_visible()
             allure.attach(self.page.screenshot(), name="Deposit button clicked", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Deposit button clicked (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-        finally: 
-            self.options_check()
+            raise AssertionError()
+
             
     @allure.step("Check for deposit options")
     def options_check(self):
@@ -100,25 +53,22 @@ class SuiteHeader(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Check for deposit options (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-            
-        finally:
-            self.close_deposit()
+
             
 
     @allure.step("Close the deposit window")
     def close_deposit(self):
         try:
             self.closing_button.click()
-            time.sleep(1)
+            expect(self.payment_method).to_be_hidden()
             allure.attach(self.page.screenshot(), name="Close the deposit window", attachment_type=allure.attachment_type.PNG)
-        
+
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Close the deposit window (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-        
-        finally:
-            self.open_players_profile()
+            raise AssertionError()
+
     
     @allure.step("Open wallet in player's profile")
     def open_players_profile(self):
@@ -132,8 +82,7 @@ class SuiteHeader(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Opening profile (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-        finally:
-            self.check_deposit_tab()
+
     
     @allure.step("Check deposit tab")
     def check_deposit_tab(self):

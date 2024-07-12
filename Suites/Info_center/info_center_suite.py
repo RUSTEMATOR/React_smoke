@@ -7,28 +7,21 @@ from playwright.sync_api import Locator
 from Data.testinfo import TestInfo
 from Suites.Base.base_info import BaseInfo
 from Suites.Locators import Locators
+from Suites.Base.base_setup import BaseSetUp
 
 
 
-class InfoCenter(Locators):
-    
-    def __init__(self, page: Page):
-        self.page = page
-    
-    @allure.step("Open site")
-    def open_page(self, kingbillysite):
+class InfoCenter(BaseSetUp):
+    def set_up(self):
         try:
-            self.page.goto(kingbillysite)
-            allure.attach(self.page.screenshot(), name="Opening the main page successful", attachment_type=allure.attachment_type.PNG)
-            
+            super().set_up()
+            self.accept_cookie_button.click()
         except Exception as e:
-            allure.attach(self.page.screenshot(), name="Opening the site failed", attachment_type=allure.attachment_type.PNG)
+            allure.attach(self.page.screenshot(), name="Opening the info center failed", attachment_type=allure.attachment_type.PNG)
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-            raise AssertionError("Failed to open the site")  # Mark step as failed
-            
-        finally: 
-            self.open_banking_page()
+            raise AssertionError("Failed to open the info center")
+
             
             
     @allure.step("Banking page")
@@ -43,9 +36,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the banking page")  # Mark step as failed
-        
-        finally:
-            self.open_casino_faq()
+
             
             
     @allure.step("Casino FAQ")
@@ -60,9 +51,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the FAQ page")  # Mark step as failed
-    
-        finally:
-            self.open_casino_dictionary()
+
 
 
     @allure.step("Casino dictionary")
@@ -77,9 +66,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the casino dictionary page")  # Mark step as failed
-        
-        finally:
-            self.open_crypto_page()
+
         
     
     @allure.step("Crypto currencies FAQ")
@@ -95,9 +82,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the crypto FAQ page")  # Mark step as failed
-            
-        finally:
-            self.open_complaints()
+
     
     @allure.step("Complaints")
     def open_complaints(self):
@@ -111,9 +96,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the complaints page")  # Mark step as failed
-        
-        finally:
-            self.open_terms_and_C()
+
     
     @allure.step("Terms and conditions")
     def open_terms_and_C(self):
@@ -127,9 +110,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the T&C page")  # Mark step as failed
-        
-        finally:
-            self.open_privacy_policy()
+
             
     
     @allure.step("Privacy policy")
@@ -144,10 +125,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the privacy policy page")  # Mark step as failed
-        
-        finally:
-            self.open_responsible_gaming()
-            
+
     
     @allure.step("Responsible gaming page")
     def open_responsible_gaming(self):
@@ -161,9 +139,7 @@ class InfoCenter(Locators):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
             raise AssertionError("Failed to open the responsible gaming page")  # Mark step as failed
-        
-        finally:
-            self.open_support()
+
             
     
     @allure.step("Casino support")
