@@ -1,8 +1,9 @@
 import allure
 import pytest
+import pdb
 import time
 from contextlib import contextmanager
-from playwright.sync_api import sync_playwright, Page
+from playwright.sync_api import sync_playwright, Page, expect
 from playwright.sync_api import Locator
 from Data.testinfo import TestInfo
 from Suites.Base.base_info import BaseInfo
@@ -29,6 +30,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.banking_page.click()
             self.page.get_by_role("heading", name="Payments").is_visible()
+            expect(self.payment_method_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Banking page is open", attachment_type=allure.attachment_type.PNG)
             
         except Exception as e:
@@ -44,6 +46,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.casino_faq_page.click()
             self.faq_title.is_visible()
+            expect(self.faq_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Casino FAQ is open", attachment_type=allure.attachment_type.PNG)
         
         except Exception as e:
@@ -59,6 +62,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.casino_dictionary_page.click()
             self.dictionary_title.is_visible()
+            expect(self.dictionary_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Casino dictionary is open", attachment_type=allure.attachment_type.PNG)
             
         except Exception as e:
@@ -74,6 +78,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.crypto_page.click()
             self.crypto_page_title.is_visible()
+            expect(self.crypto_faq_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Crypto currencies FAQ is open", attachment_type=allure.attachment_type.PNG)
                 
         
@@ -89,6 +94,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.complaints_page.click()
             self.complaints_title.is_visible()
+            expect(self.complaints_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Complaints page is open", attachment_type=allure.attachment_type.PNG)
         
         except Exception as e:
@@ -103,6 +109,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.terms_page.click()
             self.terms_title.is_visible()
+            expect(self.termsAndConditions_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Terms and conditions is open", attachment_type=allure.attachment_type.PNG)
             
         except Exception as e:
@@ -118,6 +125,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.privacy_page.click()
             self.privacy_title.is_visible()
+            expect(self.privacy_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Privacy policy is open", attachment_type=allure.attachment_type.PNG)
             
         except Exception as e:
@@ -132,6 +140,7 @@ class InfoCenter(BaseSetUp):
         try:
             self.responsible_page.click()
             self.responsible_title.is_visible()
+            expect(self.responsible_gambling_container).to_be_visible()
             allure.attach(self.page.screenshot(), name="Responsible gaming page", attachment_type=allure.attachment_type.PNG)
             
         except Exception as e:
@@ -147,6 +156,8 @@ class InfoCenter(BaseSetUp):
         try:
             self.support_page.click()
             self.support_title.is_visible()
+            expect(self.email_input_support_form).to_be_visible()
+            expect(self.message_input_support_form).to_be_visible()
             allure.attach(self.page.screenshot(), name="Caasino support is open", attachment_type=allure.attachment_type.PNG)
 
         except Exception as e:

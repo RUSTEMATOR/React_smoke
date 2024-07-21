@@ -1,14 +1,14 @@
 import allure
-# import pytest
+import pytest
 # from playwright.sync_api import Page
-# from Suites.Login_reg.login_suite import SuiteLogIn
+from Suites.Login_reg.login_suite import SuiteLogIn
 from Suites.Deposit.deposit_case import SuiteHeader
 # from Suites.Search_bar.search_bar_case import SearchBar
 # from Suites.Negative_registration.test_negative_registration import TestData
 # from Suites.Negative_registration.test_negative_registration import NegativeReg
-# from Suites.Login_reg.negative_login_suite import NegativeLogin
-# from Suites.Login_reg.negative_login_suite import TestData_login
-# from Suites.Jackpot.jackpot_suite import JackpotBanners
+from Suites.Login_reg.negative_login_suite import NegativeLogin
+from Suites.Login_reg.negative_login_suite import TestData_login
+from Suites.Jackpot.jackpot_suite import JackpotBanners
 # from Suites.Burger_menu.burger_menu_suite import BurgerMenu
 # from Suites.Promo.promo_suite import PromoCards
 # from Suites.API.api_requests import test_url_response
@@ -16,19 +16,28 @@ from Suites.Deposit.deposit_case import SuiteHeader
 # from Suites.Providers.providers_suite import TestDataProviders
 # from Suites.Game_categories.game_categories_suite_en import CategorieTestEn, TestDataCategoriesEn
 from Suites.Info_center.info_center_suite import InfoCenter
-# from Suites.Login_reg.registrstion_suite import Registration
+from Suites.Login_reg.registrstion_suite import Registration
 
 
-# @allure.suite("Registration")
-# def test_registration(page):
-#     registration = Registration(page)
-#     registration.open_site()
-#
+@allure.suite("Registration")
+def test_registration(playwright):
+    registration = Registration(playwright)
+    registration.set_up_no_login()
+    registration.open_registration()
+    registration.fillin_login()
+    registration.fillin_password()
+    registration.adult_checkbox()
+    registration.create_account()
+    registration.notification_check()
+
 # @allure.suite("Log in")
-# def test_login_duite(page):
-#     suite_login = SuiteLogIn(page)
-#     suite_login.open_page()
-#
+# def test_login_duite(playwright):
+#     suite_login = SuiteLogIn(playwright)
+#     suite_login.set_up_no_login()
+#     suite_login.open_signin_form()
+#     suite_login.enter_valid_data()
+#     suite_login.press_login()
+
 # @allure.suite("Header suite")
 # def test_deposit(playwright):
 #     case_deposit = SuiteHeader(playwright)
@@ -54,15 +63,19 @@ from Suites.Info_center.info_center_suite import InfoCenter
 #
 # @allure.suite("Negative login")
 # @pytest.mark.parametrize("email, password", zip(TestData_login.emails, TestData_login.passwords))
-# def test_negativelogin(page: Page, email: str, password: str) -> None:
-#     negative_log = NegativeLogin(page)
-#     negative_log.test_negativelogin(page, email, password)
+# def test_negativelogin(playwright, email: str, password: str) -> None:
+#     negative_log = NegativeLogin(playwright)
+#     negative_log.test_negativelogin(playwright, email, password)
 #
 #
 # @allure.suite("Jackpot banners suite")
-# def test_jackpot_banners(page):
-#     jackpot_banners = JackpotBanners(page)
-#     jackpot_banners.open_page()
+# def test_jackpot_banners(playwright):
+#     jackpot_banners = JackpotBanners(playwright)
+#     jackpot_banners.set_up()
+#     jackpot_banners.click_on_crown()
+#     jackpot_banners.click_on_shield()
+#     jackpot_banners.click_on_sword()
+
     
 
 # @allure.suite("Burger menu suite")
@@ -83,19 +96,19 @@ from Suites.Info_center.info_center_suite import InfoCenter
 #     promo = PromoCards(page)
 #     promo.open_page()
 #
-@allure.suite("Info_center")
-def test_info_center(playwright):
-    info_center = InfoCenter(playwright)
-    info_center.set_up()
-    info_center.open_banking_page()
-    info_center.open_casino_faq()
-    info_center.open_casino_dictionary()
-    info_center.open_crypto_page()
-    info_center.open_complaints()
-    info_center.open_terms_and_C()
-    info_center.open_privacy_policy()
-    info_center.open_responsible_gaming()
-    info_center.open_support()
+# @allure.suite("Info_center")
+# def test_info_center(playwright):
+#     info_center = InfoCenter(playwright)
+#     info_center.set_up()
+#     info_center.open_banking_page()
+#     info_center.open_casino_faq()
+#     info_center.open_casino_dictionary()
+#     info_center.open_crypto_page()
+#     info_center.open_complaints()
+#     info_center.open_terms_and_C()
+#     info_center.open_privacy_policy()
+#     info_center.open_responsible_gaming()
+#     info_center.open_support()
 #
 #
 # @pytest.mark.parametrize("categorie_name_en", TestDataCategoriesEn.categorie_name_en)

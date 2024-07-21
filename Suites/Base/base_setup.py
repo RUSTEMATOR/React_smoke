@@ -26,7 +26,7 @@ class BaseSetUp(Locators):
 
 
 
-        self.context = self.browser.new_context()
+        self.context = self.browser.new_context(viewport={"width": 1920, "height": 1080})
         self.page = self.context.new_page()
 
     @allure.step("Open the page")

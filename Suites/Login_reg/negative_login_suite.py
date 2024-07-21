@@ -1,4 +1,5 @@
-from playwright.sync_api import Playwright, sync_playwright, Page
+from playwright.sync_api import Playwright, sync_playwright, Page, expect
+from Suites.Base.base_setup import BaseSetUp
 import pytest
 import allure
 import time
@@ -35,24 +36,18 @@ class TestData_login():
         "kingbillycasino.com"
     ]
 
-class NegativeLogin(TestData_login):
-    
-    def __init__(self, page: Page):
-        self.page = page
+class NegativeLogin(TestData_login, BaseSetUp):
         
     @allure.title("Negative emails_check")
     # Define the test function
     @pytest.mark.parametrize("email, password", zip(TestData_login.emails, TestData_login.passwords))
     def test_negativelogin(self, page: Page, email: str, password: str) -> None:
-        self.page.goto("https://www.kingbillycasino.com/")
+        super().set_up_no_login()
         self.page.get_by_role("link", name="sign in").click()
         self.page.get_by_placeholder("your e-mail address").fill(email)
         self.page.get_by_placeholder("your password").click()
         self.page.get_by_placeholder("your password").fill(password)
         self.page.get_by_role("button", name="sign in").click()
-        time.sleep(3)
-        
-        if self.page.get_by_role("link", name="GET BONUS").is_visible():
-            raise AssertionError("Test failed: Sign in is successful.")
-        else:
-            print("Test passed: Login is not possible.")
+
+        expect(self.page.get_by_role("link", name="GET BONUS")).not_to_be_visible()
+        self.browser.close()

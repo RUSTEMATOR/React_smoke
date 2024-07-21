@@ -2,9 +2,10 @@ import allure
 import pytest
 import time
 from contextlib import contextmanager
-from playwright.sync_api import sync_playwright, Page
+from playwright.sync_api import sync_playwright, Page, expect
 from playwright.sync_api import Locator
 from Data.testinfo import TestInfo
+from Suites.Base.base_setup import BaseSetUp
 from Suites.Locators.Locators import Locators
 
 
@@ -19,27 +20,20 @@ class Generator():
         return f'{random_word}{random_numbers}@kingbilly.xyz'
 
 
-class Registration(TestInfo, Locators):
-    def __init__(self, page: Page):
-        self.page = page
-
-    @allure.step("Open Site")
-    def open_site(self):
+class Registration(TestInfo, BaseSetUp):
+    def set_up(self):
         try:
-            self.page.goto("https://www.kingbillycasino.com/")
-            allure.attach(self.page.screenshot(), name="Page opened", attachment_type=allure.attachment_type.PNG)
+            super().set_up_no_login()
+            self.accept_cookie_button.click()
 
         except Exception as e:
-            allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
-            raise AssertionError
-
-        finally:
-            self.open_registration()
+            raise AssertionError from e
 
     @allure.step("Open registration form")
     def open_registration(self):
         try:
             self.registration_form.click()
+            expect(self.login_input).to_be_visible()
             allure.attach(self.page.screenshot(), name="Registration form opened",
                           attachment_type=allure.attachment_type.PNG)
 
@@ -47,43 +41,43 @@ class Registration(TestInfo, Locators):
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.fillin_login()
 
     @allure.step("Fill in login input")
     def fillin_login(self):
         random_email = Generator.generate_random_email()
+
         try:
             self.login_input.fill(random_email)
+            self.password_input.click()
+            time.sleep(1)
+            expect(self.login_input).to_have_value(random_email)
             # Write email to the log file
             with open('test_accs_automation.txt', 'a') as file:
                 file.write(random_email + '\n')
-            allure.attach(self.page.screenshot(), name="Login filled", attachment_type=allure.attachment_type.PNG)
+            # allure.attach(self.page.screenshot(), name="Login filled", attachment_type=allure.attachment_type.PNG)
 
         except Exception as e:
-            allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
+            allure.attach(self.page.screenshot(), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.fillin_password()
 
     @allure.step("Fill in password")
     def fillin_password(self):
         try:
             self.password_input.fill("193786Az()")
+            expect(self.password_input).to_have_value("193786Az()")
             allure.attach(self.page.screenshot(), name="Password filled", attachment_type=allure.attachment_type.PNG)
 
         except Exception as e:
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.adult_checkbox()
 
     @allure.step("Click on 18 years old checkbox")
     def adult_checkbox(self):
         try:
             self.adult_checkbox.click()
+            expect(self.adult_checkbox).to_be_checked(True)
             allure.attach(self.page.screenshot(), name="18 years old checkbox clicked",
                           attachment_type=allure.attachment_type.PNG)
 
@@ -91,13 +85,12 @@ class Registration(TestInfo, Locators):
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.promo_checkbox()
 
     @allure.step("Click on Promo checkbox")
     def promo_checkbox(self):
         try:
             self.promo_checkbox.click()
+            expect(self.promo_checkbox).to_be_checked(True)
             allure.attach(self.page.screenshot(), name="Promo checkbox clicked",
                           attachment_type=allure.attachment_type.PNG)
 
@@ -105,8 +98,6 @@ class Registration(TestInfo, Locators):
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.create_account()
 
     @allure.step("Create account")
     def create_account(self):
@@ -119,15 +110,12 @@ class Registration(TestInfo, Locators):
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
-        finally:
-            self.notification_check()
 
     @allure.step("Check for notification")
     def notification_check(self):
         try:
-            self.notification.is_visible()
-            allure.attach(self.page.screenshot(), name="Notification is present",
-                          attachment_type=allure.attachment_type.PNG)
+            expect(self.notification).to_be_visible()
+            allure.attach(self.page.screenshot(), name="Notification is present",attachment_type=allure.attachment_type.PNG)
 
         except Exception as e:
             allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)

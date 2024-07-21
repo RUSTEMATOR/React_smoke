@@ -32,10 +32,49 @@ class Locators:
     @property
     def vip_page(self):
         return self.page.locator("#bar").get_by_role("link", name="VIP")
-
     @property
     def banking_page(self):
-        return self.page.locator('xpath=//*[@id="bar"]/div[2]/div/div/header/div[2]/ul/li[4]/a/span')
+        return self.page.locator('a[class*="link--online-casino-payments"]')
+
+    @property
+    def payment_method_container(self):
+        return self.page.locator('a[class*="link--online-casino-payments"]')
+
+    @property
+    def faq_container(self):
+        return self.page.locator('div[class$="data"]')
+
+    @property
+    def dictionary_container(self):
+        return self.page.locator('div[class$="data"]')
+
+    @property
+    def crypto_faq_container(self):
+        return self.page.locator('div[class$="data"]')
+
+    @property
+    def complaints_container(self):
+        return self.page.locator('div[class$="data"]')
+
+    @property
+    def termsAndConditions_container(self):
+        return self.page.locator('div[class$="data"]')
+
+    @property
+    def privacy_container(self):
+        return self.page.locator("div[class$='data']")
+
+    @property
+    def email_input_support_form(self):
+        return self.page.locator('#contact-form-email')
+
+    @property
+    def message_input_support_form(self):
+        return self.page.locator('#content')
+
+    @property
+    def responsible_gambling_container(self):
+        return self.page.locator('div[class$="data"]')
 
     @property
     def jackpot_page(self):
@@ -47,7 +86,7 @@ class Locators:
 
     @property
     def deposit_button(self):
-        return self.page.get_by_role("link", name="deposit")
+        return self.page.get_by_role("link", name="deposit", exact=True)
 
     @property
     def payment_method(self):
@@ -158,6 +197,19 @@ class Locators:
         return self.page.get_by_role("link", name="Sword Jackpot")
 
     @property
+    def shield_banner(self):
+        return self. page.get_by_text("Shield Jackpot€")
+
+    @property
+    def sword_banner(self):
+        return self.page.get_by_text("Sword jackpot€")
+
+    @property
+    def crown_banner(self):
+        return self.page.get_by_text("Crown Jackpot€")
+
+
+    @property
     def get_bonus_link(self):
         return self.page.get_by_role("link", name="GET BONUS")
 
@@ -235,3 +287,13 @@ class Locators:
     @property
     def legend_title(self):
         return self.page.locator('xpath=//*[@id="root"]/div[2]/main/div/div/div/div/div[2]/div/h2')
+
+    @property
+    def post_reg_popup(self):
+        return self.page.locator("div[class='welcome-cards']")
+
+
+    @property
+    def sign_in_button(self):
+        return self.page.locator("button[class^='login-form']")
+
