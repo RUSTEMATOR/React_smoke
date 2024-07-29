@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import re
 
 class Locators:
     page = Page
@@ -27,11 +28,11 @@ class Locators:
         return self.page.locator('xpath=//*[@id="bar"]/div[2]/div/div/header/div[2]/ul/li[1]/a/span')
     @property
     def tournament_page(self):
-        return self.page.locator("#bar").get_by_role("link", name="Tournaments")
+        return self.page.locator('li.left-header-menu__item.left-header-menu__item--tournaments')
 
     @property
     def vip_page(self):
-        return self.page.locator("#bar").get_by_role("link", name="VIP")
+        return self.page.locator("li.left-header-menu__item.left-header-menu__item--vip-club")
     @property
     def banking_page(self):
         return self.page.locator('a[class*="link--online-casino-payments"]')
@@ -82,7 +83,7 @@ class Locators:
 
     @property
     def legend_page(self):
-        return self.page.locator("#bar").get_by_role("link", name="Legend")
+        return self.page.locator('li.left-header-menu__item.left-header-menu__item--the-legend')
 
     @property
     def deposit_button(self):
@@ -90,11 +91,11 @@ class Locators:
 
     @property
     def payment_method(self):
-        return self.page.locator("div").filter(has_text=(r"^Min €20$")).first
+        return self.page.locator('#payment_method').nth(1)
 
     @property
     def closing_button(self):
-        return self.page.get_by_role("button", name="")
+        return self.page.locator('.modal__close-icon.font-icons.font-icons--close')
 
     @property
     def sidebar_menu(self):
@@ -102,7 +103,7 @@ class Locators:
 
     @property
     def profile_unwrapper(self):
-        return self.page.locator("#downshift-2-input")
+        return self.page.locator("i.select-user-menu__arrow-icon.font-icons.font-icons--select")
 
     @property
     def profile_info_button(self):
@@ -117,8 +118,8 @@ class Locators:
         return self.page.get_by_role("link", name="deposit", exact=True)
 
     @property
-    def bank_transfer(self):
-        return self.page.get_by_role("img", name="Banküberweisung")
+    def deposit_modal(self):
+        return self.page.get_by_role('div.fast-deposit-modal__wrap')
 
     @property
     def casino_faq_page(self):
@@ -273,7 +274,7 @@ class Locators:
 
     @property
     def tournament_banner(self):
-        return self.page.locator('.tourn-item')
+        return self.page.locator('.tourn-item').nth(1)
 
     @property
     def banking_item(self):
@@ -296,4 +297,32 @@ class Locators:
     @property
     def sign_in_button(self):
         return self.page.locator("button[class^='login-form']")
+
+
+    @property
+    def bonus_modal(self):
+        return self.page.locator("div[class='promo-modal']")
+
+
+    @property
+    def getit_button(self):
+        return self.page.get_by_role("link", name="GET IT")
+
+    @property
+    def arrow(self):
+        return self.page.locator("div[class*='home-slider-main--animated'] button[class*='slick-next']")
+
+
+    @property
+    def promotions_page_sidebar(self):
+        return self.page.locator("li.left-header-menu__item.left-header-menu__item--promotions")
+
+    @property
+    def promo_list(self):
+        return self.page.locator("div.promo-page__list")
+
+
+    @property
+    def i_button(self):
+        return self.page.locator("div").filter(has_text=re.compile(r"^Crypto Welcome Bonus100% up to 1 BTC \+250 Free Spins$")).get_by_role("button")
 

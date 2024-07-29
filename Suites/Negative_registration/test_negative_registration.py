@@ -1,8 +1,8 @@
-from playwright.sync_api import Playwright, sync_playwright, Page
+from playwright.sync_api import Page, Playwright
 import pytest
 import allure
-import time
 from contextlib import contextmanager
+
 @contextmanager
 def allure_step(name, page):
     try:
@@ -28,20 +28,22 @@ class TestData():
         "example@"
     ]
 
-    links = [
-    "kingbillycasino.com"
-]
-
 class NegativeReg(TestData):
-    
-    def __init__(self, page: Page):
-        self.page = page
-        
+    def __init__(self, playwright: Playwright):
+        self.browser = playwright.chromium.launch(headless=False,
+                                                  # proxy={
+                                                  #     'server': 'http://138.197.150.103:8090',
+                                                  #     'username': 'kbc',
+                                                  #     'password': '347SP&Uwqt!2xZ7w', }
+                                                  )
+
+        self.context = self.browser.new_context(viewport={"width": 1920, "height": 1080})
+        self.page = self.context.new_page()
     @allure.title("Negative emails_check")
     # Define the test function
     @pytest.mark.parametrize("email", [(e) for e in TestData.test_data])
-    def test_negative_registration(self, page: Page, email: str, kingbillysite) -> None:
-        self.page.goto(kingbillysite)
+    def test_negative_registration(self, email: str) -> None:
+        self.page.goto("https://www.kingbillycasino.com/")
         self.page.get_by_role("button", name="accept").click()
         self.page.get_by_role("link", name="Create account").click()
         self.page.locator("#registration-dynamic-form__email").click()

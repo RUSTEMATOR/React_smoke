@@ -19,14 +19,15 @@ class BaseSetUp(Locators):
 
     def __init__(self, playwright: Playwright):
         self.browser = playwright.chromium.launch(headless= False,
-                                                  proxy={
-                                                      'server': 'http://138.197.150.103:8090',
-                                                      'username': 'kbc',
-                                                      'password': '347SP&Uwqt!2xZ7w',})
+                                                  # proxy={
+                                                  #     'server': 'http://138.197.150.103:8090',
+                                                  #     'username': 'kbc',
+                                                  #     'password': '347SP&Uwqt!2xZ7w',}
+                                                  )
 
 
 
-        self.context = self.browser.new_context(viewport={"width": 1920, "height": 1080})
+        self.context = self.browser.new_context(viewport={"width": 1900, "height": 950})
         self.page = self.context.new_page()
 
     @allure.step("Open the page")
@@ -52,6 +53,7 @@ class BaseSetUp(Locators):
             allure.attach(self.page.screenshot(), name="Sign in Form Opened (Failed)",
                           attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+            raise AssertionError()
 
 
     @allure.step("Enter valid data")
@@ -70,8 +72,7 @@ class BaseSetUp(Locators):
             allure.attach(self.page.screenshot(), name="Valid data entered (Failed)",
                           attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
-
-
+            raise AssertionError()
 
     @allure.step("Press Sign in")
     def press_enter(self):
@@ -84,6 +85,7 @@ class BaseSetUp(Locators):
             allure.attach(self.page.screenshot(), name="Valid data entered (Failed)",
                           attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+            raise AssertionError()
 
     def set_up(self):
         self.open_page()

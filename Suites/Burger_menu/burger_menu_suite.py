@@ -28,21 +28,21 @@ class BurgerMenu(BaseSetUp, BaseInfo):
             raise AssertionError from e
 
     
-    @allure.step("Open burger menu")
-    def open_burger_menu(self):
-        try:
-            self.burger_menu.click()
-            time.sleep(1)
-            allure.attach(self.page.screenshot(), name="Burger menu opened", attachment_type=allure.attachment_type.PNG)
-        except Exception as e:
-            allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
-            allure.attach(self.page.screenshot(), name="Opening burger menu (Failed)", attachment_type=allure.attachment_type.PNG)
-            allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+    # @allure.step("Open burger menu")
+    # def open_burger_menu(self):
+    #     try:
+    #         self.burger_menu.click()
+    #         time.sleep(1)
+    #         allure.attach(self.page.screenshot(), name="Burger menu opened", attachment_type=allure.attachment_type.PNG)
+    #     except Exception as e:
+    #         allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
+    #         allure.attach(self.page.screenshot(), name="Opening burger menu (Failed)", attachment_type=allure.attachment_type.PNG)
+    #         allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
     
     @allure.step("Check Promotions page")
     def open_promotions(self):
         try:
-            self.promotions_page.click()
+            self.promotions_page_sidebar.click()
             expect(self.cashback_card).to_be_visible()
             allure.attach(self.page.screenshot(), name="Promotions page is open", attachment_type=allure.attachment_type.PNG)
 
@@ -56,7 +56,6 @@ class BurgerMenu(BaseSetUp, BaseInfo):
     
     @allure.step("Open Tournament page")
     def open_tournaments(self):
-        self.burger_slider.click()
         try:
             self.tournament_page.click()
             expect(self.tournament_banner).to_be_visible()
@@ -78,7 +77,6 @@ class BurgerMenu(BaseSetUp, BaseInfo):
             
     @allure.step("Open VIP page")
     def open_vip(self):
-        self.burger_slider.click()
         try:
             self.vip_page.click()
             allure.attach(self.page.screenshot(), name="VIP page opened", attachment_type=allure.attachment_type.PNG)
@@ -97,7 +95,6 @@ class BurgerMenu(BaseSetUp, BaseInfo):
     
     @allure.step("Open banking")
     def open_banking(self):
-        self.burger_slider.click()
         try:
             self.banking_page.click()
             expect(self.banking_item).to_be_visible()
@@ -119,7 +116,6 @@ class BurgerMenu(BaseSetUp, BaseInfo):
     
     @allure.step("Open Jackpots")
     def open_jackpots(self):
-        self.burger_slider.click()
         try:
             self.jackpot_page.click()
             expect(self.shield_jackpot).to_be_visible()
@@ -140,7 +136,6 @@ class BurgerMenu(BaseSetUp, BaseInfo):
     
     @allure.step("Open Legend")
     def open_legend(self):
-        self.burger_slider.click()
         try:
             self.legend_page.click()
             expect(self.legend_title).to_be_visible()

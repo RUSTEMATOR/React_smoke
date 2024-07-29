@@ -1,6 +1,7 @@
 import allure
 import pytest
 import time
+import pdb
 from contextlib import contextmanager
 from playwright.sync_api import sync_playwright, expect
 from playwright.sync_api import Locator
@@ -53,6 +54,7 @@ class SuiteHeader(BaseSetUp):
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Check for deposit options (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+            raise AssertionError()
 
             
 
@@ -73,27 +75,27 @@ class SuiteHeader(BaseSetUp):
     @allure.step("Open wallet in player's profile")
     def open_players_profile(self):
         try:
-            self.sidebar_menu.click()
             self.profile_unwrapper.click()
             self.profile_info_button.click()
             self.wallet_tab.click()
+
             allure.attach(self.page.screenshot(), name="Go back to the main page", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Opening profile (Failed)", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+            raise AssertionError()
 
     
     @allure.step("Check deposit tab")
     def check_deposit_tab(self):
         try:
-
             self.deposit_tab.click()
-            
-            expect(self.bank_transfer).to_be_visible(timeout=10000)
+            expect(self.payment_method).to_be_visible(timeout=10000)
 
             allure.attach(self.page.screenshot(), name="Deposit methods", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)
             allure.attach(self.page.screenshot(), name="Deposit method missing", attachment_type=allure.attachment_type.PNG)
             allure.attach(self.page.content(), name="Page HTML", attachment_type=allure.attachment_type.HTML)
+            raise AssertionError()

@@ -74,15 +74,15 @@ class Registration(TestInfo, BaseSetUp):
 
 
     @allure.step("Click on 18 years old checkbox")
-    def adult_checkbox(self):
+    def adult_checkbox_check(self):
         try:
             self.adult_checkbox.click()
-            expect(self.adult_checkbox).to_be_checked(True)
+            expect(self.adult_checkbox).to_be_checked()
             allure.attach(self.page.screenshot(), name="18 years old checkbox clicked",
                           attachment_type=allure.attachment_type.PNG)
 
         except Exception as e:
-            allure.attach(self.page.screenshot(e), name="Exception Details", attachment_type=allure.attachment_type.PNG)
+            allure.attach(self.page.screenshot(), name="Exception Details", attachment_type=allure.attachment_type.PNG)
             raise AssertionError
 
 
@@ -103,6 +103,8 @@ class Registration(TestInfo, BaseSetUp):
     def create_account(self):
         try:
             self.create_account_button.click()
+            expect(self.page.locator("h4")).to_contain_text('You will receive an email with instructions on how to confirm your email address in a few minutes')
+            expect(self.post_reg_popup).to_be_visible()
             allure.attach(self.page.screenshot(), name="Create account button clicked",
                           attachment_type=allure.attachment_type.PNG)
 

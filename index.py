@@ -1,0 +1,18 @@
+import allure
+import pytest
+from playwright.sync_api import Page
+from Suites.Login_reg.login_suite import SuiteLogIn
+from Suites.Deposit.deposit_case import SuiteHeader
+from Suites.Search_bar.search_bar_case import SearchBar
+from Suites.Negative_registration.test_negative_registration import TestData
+from Suites.Negative_registration.test_negative_registration import NegativeReg
+from Suites.Login_reg.negative_login_suite import NegativeLogin
+from Suites.Login_reg.negative_login_suite import TestData_login
+from Suites.Jackpot.jackpot_suite import JackpotBanners
+from Suites.Burger_menu.burger_menu_suite import BurgerMenu
+from Suites.Promo.promo_suite import PromoCards
+from Suites.Providers.providers_suite import ProvidersTest
+from Suites.Providers.providers_suite import TestDataProviders
+from Suites.Game_categories.game_categories_suite_en import CategorieTestEn, TestDataCategoriesEn
+from Suites.Info_center.info_center_suite import InfoCenter
+from Suites.Login_reg.registrstion_suite import Registration

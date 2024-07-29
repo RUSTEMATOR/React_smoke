@@ -1,12 +1,11 @@
-from playwright.sync_api import Playwright, sync_playwright, Page, expect
+from playwright.sync_api import Page, expect, Playwright
 from Suites.Base.base_setup import BaseSetUp
 import pytest
 import allure
-import time
 from contextlib import contextmanager
 
 @contextmanager
-def allure_step(name, page):
+def allure_step(name):
     try:
         yield
     except AssertionError as e:
@@ -32,16 +31,12 @@ class TestData_login():
         "8is887dus7",
     ]
 
-    links = [
-        "kingbillycasino.com"
-    ]
-
 class NegativeLogin(TestData_login, BaseSetUp):
         
     @allure.title("Negative emails_check")
     # Define the test function
     @pytest.mark.parametrize("email, password", zip(TestData_login.emails, TestData_login.passwords))
-    def test_negativelogin(self, page: Page, email: str, password: str) -> None:
+    def test_negativelogin(self, email: str, password: str) -> None:
         super().set_up_no_login()
         self.page.get_by_role("link", name="sign in").click()
         self.page.get_by_placeholder("your e-mail address").fill(email)
