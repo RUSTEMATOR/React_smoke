@@ -38,6 +38,7 @@ class NegativeLogin(TestData_login, BaseSetUp):
     @pytest.mark.parametrize("email, password", zip(TestData_login.emails, TestData_login.passwords))
     def test_negativelogin(self, email: str, password: str) -> None:
         super().set_up_no_login()
+        self.page.pause()
         self.page.get_by_role("link", name="sign in").click()
         self.page.get_by_placeholder("your e-mail address").fill(email)
         self.page.get_by_placeholder("your password").click()
@@ -45,4 +46,4 @@ class NegativeLogin(TestData_login, BaseSetUp):
         self.page.get_by_role("button", name="sign in").click()
 
         expect(self.page.get_by_role("link", name="GET BONUS")).not_to_be_visible()
-        self.browser.close()
+

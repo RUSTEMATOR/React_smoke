@@ -1,0 +1,36 @@
+{
+  "mode": "testops",
+  "fallback": "report",
+  "testops": {
+    "debug": true,
+    "project": "CUR",
+    "api": {
+      "token": "2b3e65ab1ee17f1440a13c94b9d1da5429f590fdbcc8d080ddc41268ae50305b",
+      "host": "qase.io"
+    },
+    "run": {
+      "title": "KB Smoke"
+    },
+    "batch": {
+      "size": 100
+    }
+  },
+    "report": {
+    "driver": "local",
+    "connection": {
+      "local": {
+        "path": "./build/qase-report",
+        "format": "json"
+      }
+    }
+  },
+  "framework": {
+    "pytest": {
+      "capture": {
+        "logs": true,
+        "http": true
+      }
+    }
+  },
+  "environment": "local"
+}

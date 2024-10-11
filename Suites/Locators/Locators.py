@@ -5,37 +5,37 @@ class Locators:
     page = Page
     @property
     def sign_in_form(self):
-        return self.page.get_by_role("link", name="sign in")
+        return self.page.locator('#header_log_in_btn')
 
     @property
     def login_email_field(self):
-        return self.page.get_by_placeholder("your e-mail address")
+        return self.page.locator('#login_modal_email_input')
 
     @property
     def login_password_field(self):
-        return self.page.get_by_placeholder("your password")
+        return self.page.locator('#login_password_input')
 
     @property
     def sign_in_button(self):
-        return self.page.get_by_role("button", name="sign in")
+        return self.page.locator('#submit_login')
 
     @property
     def burger_menu(self):
-        return self.page.locator('.burger__slide').first
+        return self.page.locator('#burger_menu_btn').first
 
     @property
     def promotions_page(self):
-        return self.page.locator('xpath=//*[@id="bar"]/div[2]/div/div/header/div[2]/ul/li[1]/a/span')
+        return self.page.locator('#burger_promotions_btn')
     @property
     def tournament_page(self):
-        return self.page.locator('li.left-header-menu__item.left-header-menu__item--tournaments')
+        return self.page.locator("xpath=//a[contains(@id, 'burger_tournaments_btn ')]/span").filter(has_text='Tournaments')
 
     @property
     def vip_page(self):
-        return self.page.locator("li.left-header-menu__item.left-header-menu__item--vip-club")
+        return self.page.locator("#burger_vip_btn")
     @property
     def banking_page(self):
-        return self.page.locator('a[class*="link--online-casino-payments"]')
+        return self.page.locator('#burger_banking_btn')
 
     @property
     def payment_method_container(self):
@@ -87,7 +87,7 @@ class Locators:
 
     @property
     def deposit_button(self):
-        return self.page.get_by_role("link", name="deposit", exact=True)
+        return self.page.locator('#header_dep_btn')
 
     @property
     def payment_method(self):
@@ -216,30 +216,27 @@ class Locators:
 
     @property
     def registration_form(self):
-        return self.page.get_by_role("link", name="Create account")
+        return self.page.locator('#header_create_acc_btn')
 
     @property
     def login_input(self):
-        return self.page.locator("#registration-dynamic-form__email")
+        return self.page.locator("#reg_modal_email_input")
 
     @property
     def password_input(self):
-        return self.page.locator("#registration-dynamic-form__password_single")
+        return self.page.locator("#reg_modal_password_input")
 
     @property
     def adult_checkbox(self):
-        return self.page.locator("#sign-up label").filter(
-            has_text="I am 18 years old and I accept the Privacy Policy and Terms and Conditions *").locator(
-            "span").first
+        return self.page.locator("xpath=//label[contains (@for, 'reg_modal_age_checkbox')]/span[contains(@class, 'checkbox__point')]")
 
     @property
     def promo_checkbox(self):
-        return self.page.locator("#sign-up label").filter(has_text="I want to receive promos").locator(
-            "span").first
+        return self.page.locator("xpath=//label[contains (@for, 'reg_modal_promo_checkbox')]/span[contains(@class, 'checkbox__point')]")
 
     @property
     def create_account_button(self):
-        return self.page.locator("#sign-up").get_by_role("button", name="Create account")
+        return self.page.locator('#reg_modal_submit_btn')
 
     @property
     def notification(self):
@@ -248,7 +245,7 @@ class Locators:
 
     @property
     def search_bar(self):
-        return self.page.locator("#games-search")
+        return self.page.locator("#header_search_input")
 
     @property
     def fire_lighnting_button(self):
@@ -306,7 +303,7 @@ class Locators:
 
     @property
     def getit_button(self):
-        return self.page.get_by_role("link", name="GET IT")
+        return self.page.get_by_role("link", name="GET IT", exact=True)
 
     @property
     def arrow(self):
@@ -324,5 +321,5 @@ class Locators:
 
     @property
     def i_button(self):
-        return self.page.locator("div").filter(has_text=re.compile(r"^Crypto Welcome Bonus100% up to 1 BTC \+250 Free Spins$")).get_by_role("button")
+        return self.page.locator("xpath=//button[contains(@class, 'promo-item__info')]").nth(1)
 

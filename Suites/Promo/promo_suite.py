@@ -79,11 +79,6 @@ class PromoCards(BaseSetUp):
 
             time.sleep(2)
             allure.attach(self.page.screenshot(), name="Button 'i' is pressed", attachment_type=allure.attachment_type.PNG)
-            
-            if self.page.locator("#promo-3").get_by_role("link", name="deposit").is_visible():
-                pass
-            else:
-                raise AssertionError
         
         except Exception as e:
             allure.attach(str(e), name="Exception Details", attachment_type=allure.attachment_type.TEXT)

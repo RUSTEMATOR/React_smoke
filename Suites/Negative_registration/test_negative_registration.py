@@ -30,11 +30,11 @@ class TestData():
 
 class NegativeReg(TestData):
     def __init__(self, playwright: Playwright):
-        self.browser = playwright.chromium.launch(headless=False,
-                                                  # proxy={
-                                                  #     'server': 'http://138.197.150.103:8090',
-                                                  #     'username': 'kbc',
-                                                  #     'password': '347SP&Uwqt!2xZ7w', }
+        self.browser = playwright.chromium.launch(headless=True,
+                                                  proxy={
+                                                      'server': 'http://138.197.150.103:8090',
+                                                      'username': 'kbc',
+                                                      'password': '347SP&Uwqt!2xZ7w', }
                                                   )
 
         self.context = self.browser.new_context(viewport={"width": 1920, "height": 1080})
@@ -45,14 +45,12 @@ class NegativeReg(TestData):
     def test_negative_registration(self, email: str) -> None:
         self.page.goto("https://www.kingbillycasino.com/")
         self.page.get_by_role("button", name="accept").click()
-        self.page.get_by_role("link", name="Create account").click()
-        self.page.locator("#registration-dynamic-form__email").click()
-        self.page.locator("#registration-dynamic-form__email").fill(email)
-        self.page.locator("#registration-dynamic-form__password_single").fill("193786Az()")
-        self.page.locator("#sign-up label").filter(has_text="I am 18 years old and I accept the Privacy Policy and Terms and Conditions *").click()
-        create_account_button = self.page.locator("#sign-up").get_by_role("button", name="Create account")
+        self.page.locator('#header_create_acc_btn').click()
+        self.page.locator("#reg_modal_email_input").fill(email)
+        self.page.locator("#reg_modal_password_input").fill("193786Az()")
+        self.page.locator("xpath=//label[contains (@for, 'reg_modal_age_checkbox')]/span[contains(@class, 'checkbox__point')]").click()
 
-        if create_account_button.is_enabled():
+        if self.page.locator("#reg_modal_submit_btn").is_enabled():
             raise AssertionError("Test failed: Create account button is clickable.")
         else:
             print("Test passed: Create account button is not clickable.")

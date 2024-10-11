@@ -8,7 +8,7 @@ from Suites.Base.base_setup import BaseSetUp
 class TestDataCategoriesEn():
     categorie_name_en = ["New", "Top", "Popular", "Slots", "Live", "Table games"]
     dropdown_slot_item = ["Accumulating", "Bonus buy", "Megaways", "Exclusive", "Crash"]
-    dropdown_live_item = ["Live blackjack", "Live roulette", "Live baccarat", "Live poker"]
+    dropdown_live_item = ["live_blackjack", "live_roulette", "live_baccarat", "live_poker"]
     dropdown_table_item = ["Online roulette", "Online blackjack", "Online baccarat"]
 
 class CategorieTestEn(BaseSetUp):
@@ -109,7 +109,7 @@ class CategorieTestEn(BaseSetUp):
         self.page.locator("a").filter(has_text=re.compile(r"^Live$")).nth(1).click()
         time.sleep(2)
         self.page.locator("div.slick-slide.slick-active.slick-current > div > div > div > div > button").click()
-        self.page.get_by_role('link', name=dropdown_live_item).click()
+        self.page.locator(f'#{dropdown_live_item}').click()
         time.sleep(3)
         try:
 
